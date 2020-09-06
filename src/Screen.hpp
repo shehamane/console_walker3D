@@ -6,13 +6,20 @@
 class Screen {
 private:
     int width, height;
-    int fps;
+    int fps{};
+    static struct termios oldIO, currentIO;
 
-    void resize();
-    void clear();
-    void sleep(unsigned int delay);
+    //input
+    void initTermios();
+    void resetTermios(void);
+
+    //output
+    void resize() const;
+    static void clear();
+    void sleep(unsigned int delay) const;
     void printWithDelay(std::string s, unsigned int delay);
 public:
+    char getch(void);
     Screen(int w, int h);
     void setFPS(int fps);
 };
