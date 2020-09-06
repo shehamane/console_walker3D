@@ -2,12 +2,13 @@
 #define CONSOLEWALKER3D_SCREEN_HPP
 
 #include <string>
+#include <termios.h>
 
 class Screen {
 private:
     int width, height;
     int fps{};
-    static struct termios oldIO, currentIO;
+    struct termios oldIO, currentIO;
 
     //input
     void initTermios();
@@ -16,13 +17,16 @@ private:
     //output
     void resize() const;
     static void clear();
-    void sleep(unsigned int delay) const;
-    void printWithDelay(std::string s, unsigned int delay);
 public:
-    char getch(void);
     Screen(int w, int h);
-    void setFPS(int fps);
-};
+    Screen();
 
+    void setFPS(int fps);
+    char getch(void);
+    void printWithDelay(std::string s, unsigned int delay);
+    void sleep(unsigned int delay) const;
+
+
+};
 
 #endif //CONSOLEWALKER3D_SCREEN_HPP

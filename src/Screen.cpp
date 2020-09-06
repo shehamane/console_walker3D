@@ -5,32 +5,38 @@
 #include <termios.h>
 
 Screen::Screen(int w, int h) {
-    Screen::oldIO = {0};
     this->width = w;
     this->height = h;
     this->resize();
     Screen::clear();
+    initTermios();
 }
+
+Screen::Screen() {{
+    this->width = 120;
+    this->height = 30;
+    this->resize();
+    clear();
+    initTermios();
+}}
 
 //input
 
 void Screen::initTermios() {
-    tcgetattr(0, &Screen::oldIO);
-    Screen::currentIO = Screen::oldIO;
-    Screen::currentIO.c_lflag &= ~ICANON;
-    Screen::currentIO.c_lflag &= ~ECHO;
-    tcsetattr(0, TCSANOW, &Screen::currentIO);
+    tcgetattr(0, &oldIO);
+    currentIO = oldIO;
+    currentIO.c_lflag &= ~ICANON;
+    currentIO.c_lflag &= ~ECHO;
+    tcsetattr(0, TCSANOW, &currentIO);
 }
 
 void Screen::resetTermios(void) {
-    tcsetattr(0, TCSANOW, &Screen::oldIO);
+    tcsetattr(0, TCSANOW, &oldIO);
 }
 
 char Screen::getch() {
     char ch;
-    initTermios();
     ch = getchar();
-    resetTermios();
     return ch;
 }
 
@@ -57,8 +63,10 @@ void Screen::sleep(unsigned int delay = 0) const {
     }
 }
 
-void Screen::printWithDelay(std::string s, unsigned int delay) {
+void Screen::printWithDelay(std::string s, unsigned int delay = 0) {
+    clear();
     std::cout << s;
     std::cout.flush();
     this->sleep(delay);
 }
+
