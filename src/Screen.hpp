@@ -13,18 +13,19 @@ private:
     //input
     void initTermios();
     void resetTermios(void);
+    char getch(void);
 
     //output
     void resize() const;
-    static void clear();
+    void clear();
+    void printWithDelay(std::string s, unsigned int delay);
+    void sleep(unsigned int delay) const;
 public:
     Screen(int w, int h);
     Screen();
 
     void setFPS(int fps);
-    char getch(void);
-    void printWithDelay(std::string s, unsigned int delay);
-    void sleep(unsigned int delay) const;
+
 
 
 };
