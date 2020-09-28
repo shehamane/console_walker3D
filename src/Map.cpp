@@ -39,23 +39,45 @@ void Map::changeMap(int lineIndex, std::string newLine) {
 }
 
 Map::Scheme::Scheme(int w, int h) {
-    this->scheme = new std::string[h];
+    width = w;
+    height = h;
+    this->scheme = new bool*[h];
+    for (int i = 0; i<h; ++i)
+        this->scheme[i] = new bool[w];
 }
 
-void Map::Scheme::changeLine(int i, std::string newLine) {
-    this->scheme[i] = newLine;
+bool Map::Scheme::charToBool(char c) {
+    return c != ' ';
 }
 
-std::string &Map::Scheme::operator[](int i) {
-    return this->scheme[i];
+char Map::Scheme::boolToChar(bool b) {
+    if (b)
+        return '#';
+    return ' ';
 }
 
-std::string Map::Scheme::getLine(int i) {
-    return this->scheme[i];
+void Map::Scheme::changeLine(int lineNumber, std::string newLine) {
+    for (int i = 0; i<width; ++i){
+        scheme[lineNumber][i] = charToBool(newLine[i]);
+    }
+}
+
+std::string &Map::Scheme::operator[](int lineNumber) {
+    std::string s;
+    for (int i = 0; i<width; ++i)
+        s += boolToChar(scheme[lineNumber][i]);
+    return s;
+}
+
+std::string Map::Scheme::getLine(int lineNumber) {
+    std::string s;
+    for (int i = 0; i<width; ++i)
+        s += boolToChar(scheme[lineNumber][i]);
+    return s;
 }
 
 Map::MapException::MapException(std::string error) {
-    m_error = error;
+    m_error = std::move(error);
 }
 
 const char * Map::MapException::what() const noexcept {

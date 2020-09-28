@@ -9,9 +9,9 @@
 void initMap(Map *m) {
     std::vector<std::string> pattern = {
             "##########",
-            "#........#",
-            "#........#",
-            "#........#",
+            "#        #",
+            "#        #",
+            "#        #",
             "##########",
     };
     (*m).build(pattern);
@@ -23,6 +23,7 @@ int main(int argc, char **argv) {
         screen.setFPS(60);
         Map m(10, 5);
         initMap(&m);
+        m.print();
         sleep(10);
     } catch (std::exception e) {
         printf("%s", e.what());

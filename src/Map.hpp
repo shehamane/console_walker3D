@@ -9,11 +9,15 @@ class Map {
 public:
     class Scheme {
     private:
-        std::string *scheme;
+        int width, height;
+        bool **scheme;
+
+        static bool charToBool(char c);
+        static char boolToChar(bool b);
     public:
         Scheme(int w, int h);
 
-        void changeLine(int i, std::string newLine);
+        void changeLine(int lineNumber, std::string newLine);
 
         std::string &operator[](int i);
 
