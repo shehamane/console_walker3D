@@ -7,7 +7,7 @@
 class Screen {
 private:
     int width, height;
-    int fps{};
+    int fps;
     struct termios oldIO, currentIO;
 
     //input
@@ -23,6 +23,7 @@ private:
 public:
     Screen(int w, int h);
     Screen();
+    ~Screen();
 
     void setFPS(int fps);
 
