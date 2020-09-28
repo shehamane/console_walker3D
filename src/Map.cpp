@@ -1,6 +1,4 @@
 #include "Map.hpp"
-#include <string>
-
 
 Map::Map(int w, int h) {
     this->width = w;
@@ -16,6 +14,17 @@ void Map::build() {
     }
     for (int i = 0; i < height; ++i)
         scheme->changeLine(i, (i == 0 || i == height - 1) ? map_border : map_field);
+}
+
+void Map::build(std::vector<std::string> pattern) {
+    if (pattern.size() != height)
+        throw MapException("Высота шаблона не соответствует высоте карты");
+    for (int i = 0; i < height; ++i){
+        if (pattern[i].size() != width)
+            throw MapException("Ширина шаблона не соответствует ширине карты");
+
+        scheme->changeLine(i, pattern[i]);
+    }
 }
 
 void Map::print() {
@@ -43,4 +52,12 @@ std::string &Map::Scheme::operator[](int i) {
 
 std::string Map::Scheme::getLine(int i) {
     return this->scheme[i];
+}
+
+Map::MapException::MapException(std::string error) {
+    m_error = error;
+}
+
+const char * Map::MapException::what() const noexcept {
+    return m_error.c_str();
 }
