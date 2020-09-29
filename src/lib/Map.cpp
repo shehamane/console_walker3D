@@ -12,11 +12,9 @@ Map::Map(int w, int h) {
 }
 
 void Map::build() {
-    std::string map_border, map_field;
-    for (int i = 0; i < width; ++i) {
-        map_border += '#';
-        map_field += (i == 0 || i == width - 1) ? '#' : '.';
-    }
+    std::string map_border(width, '#'), map_field(width-2, ' ');
+    map_field = "#" + map_field + "#";
+
     for (int i = 0; i < height; ++i)
         scheme->changeLine(i, (i == 0 || i == height - 1) ? map_border : map_field);
 }
