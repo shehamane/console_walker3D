@@ -7,7 +7,7 @@ Map::Map(int w, int h) {
 }
 
 void Map::build() {
-    std::string map_border = "", map_field = "";
+    std::string map_border, map_field;
     for (int i = 0; i < width; ++i) {
         map_border += '#';
         map_field += (i == 0 || i == width - 1) ? '#' : '.';

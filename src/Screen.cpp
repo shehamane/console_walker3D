@@ -12,13 +12,15 @@ Screen::Screen(int w, int h) {
     initTermios();
 }
 
-Screen::Screen() {{
-    this->width = 120;
-    this->height = 30;
-    this->resize();
-    clear();
-    initTermios();
-}}
+Screen::Screen() {
+    {
+        this->width = 120;
+        this->height = 30;
+        this->resize();
+        clear();
+        initTermios();
+    }
+}
 
 //input
 
@@ -35,6 +37,7 @@ void Screen::resetTermios(void) {
 }
 
 char Screen::getch() {
+    tcflush(0, TCIOFLUSH);
     char ch;
     ch = getchar();
     return ch;
@@ -57,7 +60,7 @@ void Screen::clear() {
 void Screen::sleep(unsigned int delay = 0) const {
     double milliseconds;
     clock_t time_end;
-    milliseconds = 1000/this->fps;
+    milliseconds = 1000 / this->fps;
     time_end = clock() + (delay + milliseconds) * CLOCKS_PER_SEC / 1000;
     while (clock() < time_end) {
     }
@@ -68,5 +71,10 @@ void Screen::printWithDelay(std::string s, unsigned int delay = 0) {
     std::cout << s;
     std::cout.flush();
     this->sleep(delay);
+}
+
+std::string Screen::charToString(char c) {
+    std::string s(1, c);
+    return s;
 }
 

@@ -5,7 +5,7 @@
 #include <termios.h>
 
 class Screen {
-private:
+public:
     int width, height;
     int fps{};
     struct termios oldIO, currentIO;
@@ -20,14 +20,13 @@ private:
     void clear();
     void printWithDelay(std::string s, unsigned int delay);
     void sleep(unsigned int delay) const;
+
+    static std::string charToString(char c);
 public:
     Screen(int w, int h);
     Screen();
 
     void setFPS(int fps);
-
-
-
 };
 
 #endif //CONSOLEWALKER3D_SCREEN_HPP
