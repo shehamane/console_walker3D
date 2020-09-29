@@ -3,6 +3,7 @@
 
 #include <string>
 #include <termios.h>
+#include <vector>
 
 class Screen {
 public:
@@ -19,6 +20,7 @@ public:
     void resize() const;
     void clear();
     void printWithDelay(std::string s, unsigned int delay);
+    void printWithDelay(std::vector<std::string> frame, unsigned int delay);
     void sleep(unsigned int delay) const;
 
     static std::string charToString(char c);

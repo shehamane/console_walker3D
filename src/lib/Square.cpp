@@ -14,6 +14,10 @@ void Square::keyHandler() {
             changeSize(size + 1);
             show();
             break;
+        case 'g':
+            changeSize(size - 1);
+            show();
+            break;
         default:
             screen.printWithDelay("Unknown key\n");
     }
@@ -21,12 +25,12 @@ void Square::keyHandler() {
 }
 
 void Square::show() {
-    screen.printWithDelay("");
+    std::vector<std::string> frame(size);
+    std::string row(size, (char) 254);
     for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++)
-            std::cout << "\u25a0";
-        std::cout << std::endl;
+        frame[i] = row+"\n";
     }
+    screen.printWithDelay(frame);
 }
 
 void Square::changeSize(int new_size) {

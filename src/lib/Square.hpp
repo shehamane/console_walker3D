@@ -2,6 +2,7 @@
 #define CONSOLEWALKER3D_SQUARE_HPP
 
 #include "Screen.hpp"
+#include "iostream"
 
 class Square {
 private:

@@ -1,8 +1,9 @@
-#include "Screen.hpp"
 #include <iostream>
 #include <string>
 #include <ctime>
 #include <termios.h>
+#include "Screen.hpp"
+
 
 Screen::Screen(int w, int h) {
     this->width = w;
@@ -13,13 +14,11 @@ Screen::Screen(int w, int h) {
 }
 
 Screen::Screen() {
-    {
-        this->width = 120;
-        this->height = 30;
-        this->resize();
-        clear();
-        initTermios();
-    }
+    this->width = 120;
+    this->height = 30;
+    this->resize();
+    Screen::clear();
+    initTermios();
 }
 
 //input
@@ -69,6 +68,14 @@ void Screen::sleep(unsigned int delay = 0) const {
 void Screen::printWithDelay(std::string s, unsigned int delay = 0) {
     clear();
     std::cout << s;
+    std::cout.flush();
+    this->sleep(delay);
+}
+
+void Screen::printWithDelay(std::vector<std::string> frame, unsigned int delay = 0) {
+    clear();
+    for (int i = 0; i<frame.size(); ++i)
+        std::cout << frame[i];
     std::cout.flush();
     this->sleep(delay);
 }
