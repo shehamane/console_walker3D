@@ -11,6 +11,10 @@ Map::Map(int w, int h) {
     this->scheme = new Scheme(w, h);
 }
 
+Map::~Map() {
+    delete scheme;
+}
+
 void Map::build() {
     std::string map_border(width, '#'), map_field(width - 2, ' ');
     map_field = "#" + map_field + "#";
@@ -55,6 +59,12 @@ Map::Scheme::Scheme(int w, int h) {
     this->scheme = new bool *[h];
     for (int i = 0; i < h; ++i)
         this->scheme[i] = new bool[w];
+}
+
+Map::Scheme::~Scheme() {
+    for (int i = 0; i<height; ++i)
+        delete[] scheme[i];
+    delete[] scheme;
 }
 
 bool Map::Scheme::charToBool(char c) {

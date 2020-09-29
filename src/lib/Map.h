@@ -16,6 +16,7 @@ public:
         static char boolToChar(bool b);
     public:
         Scheme(int w, int h);
+        ~Scheme();
 
         void changeLine(int lineNumber, std::string newLine);
 
@@ -41,6 +42,7 @@ private:
     Scheme *scheme;
 public:
     Map(int w, int h);
+    ~Map();
 
     int getWidth() const;
     int getHeight() const;
