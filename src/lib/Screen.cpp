@@ -21,6 +21,10 @@ Screen::Screen() {
     initTermios();
 }
 
+Screen::~Screen() {
+    resetTermios();
+}
+
 //input
 
 void Screen::initTermios() {
