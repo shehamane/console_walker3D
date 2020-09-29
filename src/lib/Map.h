@@ -22,6 +22,8 @@ public:
         std::string &operator[](int i);
 
         std::string getLine(int i);
+
+        bool get(int x, int y);
     };
 
     class MapException : public std::exception {
@@ -40,14 +42,14 @@ private:
 public:
     Map(int w, int h);
 
+    int getWidth() const;
+    int getHeight() const;
+
     void build();
-
     void build(std::vector<std::string> pattern);
-
     void print();
-
-    void changeMap(int lineIndex, std::string newLine);
+    void changeLine(int lineIndex, std::string newLine);
+    bool get(int x, int y);
 };
-
 
 #endif //CONSOLEWALKER3D_MAP_H

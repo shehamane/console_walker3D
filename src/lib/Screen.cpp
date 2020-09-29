@@ -77,11 +77,12 @@ void Screen::printWithDelay(std::string s, unsigned int delay) {
     this->sleep(delay);
 }
 
-void Screen::printWithDelay(std::vector<std::string> frame, unsigned int delay) {
+void Screen::printWithDelay(std::vector<std::string> *frame, unsigned int delay) {
     clear();
-    for (int i = 0; i<frame.size(); ++i)
-        std::cout << frame[i];
+    for (int i = 0; i<(*frame).size(); ++i)
+        std::cout << (*frame)[i];
     std::cout.flush();
+    delete frame;
     this->sleep(delay);
 }
 

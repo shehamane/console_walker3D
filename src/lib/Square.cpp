@@ -33,7 +33,7 @@ void Square::show() {
     for (int i = 0; i < size; i++) {
         frame[i] = row+"\n";
     }
-    screen.printWithDelay(frame);
+    screen.printWithDelay(&frame);
 }
 
 void Square::changeSize(int new_size) {
