@@ -1,8 +1,7 @@
-#ifndef CONSOLEWALKER3D_SQUARE_HPP
-#define CONSOLEWALKER3D_SQUARE_HPP
+#ifndef CONSOLEWALKER3D_SQUARE_H
+#define CONSOLEWALKER3D_SQUARE_H
 
-#include "Screen.hpp"
-#include "iostream"
+#include "Screen.h"
 
 class Square {
 private:
@@ -18,4 +17,4 @@ public:
 };
 
 
-#endif //CONSOLEWALKER3D_SQUARE_HPP
+#endif //CONSOLEWALKER3D_SQUARE_H

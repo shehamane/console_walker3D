@@ -1,7 +1,7 @@
-#include "../lib/Screen.hpp"
-#include "../lib/Screen.cpp"
-#include "../lib/Square.hpp"
-#include "../lib/Square.cpp"
+#include "../lib/Screen.h"
+#include "../lib/Square.h"
+
+#include <iostream>
 
 
 int main(){

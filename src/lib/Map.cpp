@@ -1,3 +1,10 @@
+#include <string>
+#include <exception>
+#include <vector>
+#include <iostream>
+#include "Map.h"
+
+
 Map::Map(int w, int h) {
     this->width = w;
     this->height = h;
@@ -81,3 +88,5 @@ Map::MapException::MapException(std::string error) {
 const char * Map::MapException::what() const noexcept {
     return m_error.c_str();
 }
+
+
