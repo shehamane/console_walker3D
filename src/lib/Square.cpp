@@ -28,12 +28,13 @@ void Square::keyHandler() {
 }
 
 void Square::show() {
-    std::vector<std::string> frame(size);
+    auto *frame = new std::vector<std::string>(size);
     std::string row(size, (char) 254);
     for (int i = 0; i < size; i++) {
-        frame[i] = row+"\n";
+        (*frame)[i] = row+"\n";
     }
-    screen.printWithDelay(&frame);
+    screen.showFrame(frame);
+    delete[] frame;
 }
 
 void Square::changeSize(int new_size) {

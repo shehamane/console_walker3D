@@ -39,8 +39,8 @@ int main(int argc, char **argv) {
         m.print();
 
         while(true){
+            screen.showFrame(mp.toFrame());
             p.step(screen.getch());
-            screen.printWithDelay(mp.toFrame());
         }
 
         sleep(10);

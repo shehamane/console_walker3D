@@ -77,7 +77,7 @@ void Screen::printWithDelay(std::string s, unsigned int delay) {
     this->sleep(delay);
 }
 
-void Screen::printWithDelay(std::vector<std::string> *frame, unsigned int delay) {
+void Screen::showFrame(std::vector<std::string> *frame, unsigned int delay) {
     clear();
     for (int i = 0; i<(*frame).size(); ++i)
         std::cout << (*frame)[i];

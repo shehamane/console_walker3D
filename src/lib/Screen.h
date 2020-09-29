@@ -20,7 +20,7 @@ public:
     void resize() const;
     void clear();
     void printWithDelay(std::string s, unsigned int delay = 0);
-    void printWithDelay(std::vector<std::string> *frame, unsigned int delay = 0);
+    void showFrame(std::vector<std::string> *frame, unsigned int delay = 0);
     void sleep(unsigned int delay) const;
 
     static std::string charToString(char c);
