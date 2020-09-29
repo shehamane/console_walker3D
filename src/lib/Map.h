@@ -1,5 +1,5 @@
-#ifndef CONSOLEWALKER3D_MAP_HPP
-#define CONSOLEWALKER3D_MAP_HPP
+#ifndef CONSOLEWALKER3D_MAP_H
+#define CONSOLEWALKER3D_MAP_H
 
 #include <string>
 #include <exception>
@@ -50,4 +50,4 @@ public:
 };
 
 
-#endif //CONSOLEWALKER3D_MAP_HPP
+#endif //CONSOLEWALKER3D_MAP_H

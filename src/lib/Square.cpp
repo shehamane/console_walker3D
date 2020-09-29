@@ -1,4 +1,7 @@
-#include "Square.hpp"
+#include "iostream"
+#include "Screen.h"
+#include "Square.h"
+
 
 Square::Square(Screen screen, int size) {
     this->size = size;

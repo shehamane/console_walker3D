@@ -1,7 +1,6 @@
-#include "lib/Screen.hpp"
-#include "lib/Screen.cpp"
-#include "lib/Map.hpp"
-#include "lib/Map.cpp"
+#include "lib/Screen.h"
+#include "lib/Map.h"
+
 #include <unistd.h>
 #include <string>
 #include <vector>

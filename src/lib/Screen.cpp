@@ -1,8 +1,9 @@
 #include <iostream>
+#include <vector>
 #include <string>
 #include <ctime>
 #include <termios.h>
-#include "Screen.hpp"
+#include "Screen.h"
 
 
 Screen::Screen(int w, int h) {
@@ -65,14 +66,14 @@ void Screen::sleep(unsigned int delay = 0) const {
     }
 }
 
-void Screen::printWithDelay(std::string s, unsigned int delay = 0) {
+void Screen::printWithDelay(std::string s, unsigned int delay) {
     clear();
     std::cout << s;
     std::cout.flush();
     this->sleep(delay);
 }
 
-void Screen::printWithDelay(std::vector<std::string> frame, unsigned int delay = 0) {
+void Screen::printWithDelay(std::vector<std::string> frame, unsigned int delay) {
     clear();
     for (int i = 0; i<frame.size(); ++i)
         std::cout << frame[i];
@@ -84,4 +85,3 @@ std::string Screen::charToString(char c) {
     std::string s(1, c);
     return s;
 }
-
