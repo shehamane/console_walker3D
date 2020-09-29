@@ -74,7 +74,7 @@ void Map::Scheme::changeLine(int lineNumber, std::string newLine) {
 }
 
 bool Map::Scheme::get(int x, int y) {
-    return scheme[x][y];
+    return this->scheme[x][y];
 }
 
 std::string &Map::Scheme::operator[](int lineNumber) {

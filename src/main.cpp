@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
         Map m(27, 10);
         initMap(&m);
 
-        Player p(&m);
+        Player p(&m, 1.0, 1.0);
         p.setSpeed(1);
 
         Minimap mp(&m, &p);
