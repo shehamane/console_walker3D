@@ -11,6 +11,11 @@ Map::Map(int w, int h) {
     this->scheme = new Scheme(w, h);
 }
 
+Map::Map() {
+    this->width = this->height = 0;
+    this->scheme = nullptr;
+}
+
 Map::~Map() {
     delete scheme;
 }
@@ -24,13 +29,24 @@ void Map::build() {
 }
 
 void Map::build(std::vector<std::string> pattern) {
-    if (pattern.size() != height)
-        throw MapException("Высота шаблона не соответствует высоте карты");
-    for (int i = 0; i < height; ++i) {
-        if (pattern[i].size() != width)
-            throw MapException("Ширина шаблона не соответствует ширине карты");
+    if (width == 0 && height == 0) {
+        this -> height = pattern.size();
+        this->width = pattern[0].size();
+        this->scheme = new Scheme(width, height);
+        for (int i = 0; i<height; i++){
+            if (pattern[i].size() != width)
+                throw MapException("Карта имеет не прямоугольную форму");
+            scheme->changeLine(i, pattern[i]);
+        }
+    } else {
+        if (pattern.size() != height)
+            throw MapException("Высота шаблона не соответствует высоте карты");
+        for (int i = 0; i < height; ++i) {
+            if (pattern[i].size() != width)
+                throw MapException("Ширина шаблона не соответствует ширине карты");
 
-        scheme->changeLine(i, pattern[i]);
+            scheme->changeLine(i, pattern[i]);
+        }
     }
 }
 
@@ -62,7 +78,7 @@ Map::Scheme::Scheme(int w, int h) {
 }
 
 Map::Scheme::~Scheme() {
-    for (int i = 0; i<height; ++i)
+    for (int i = 0; i < height; ++i)
         delete[] scheme[i];
     delete[] scheme;
 }
@@ -101,8 +117,8 @@ std::string Map::Scheme::getLine(int lineNumber) {
     return s;
 }
 
-Map::MapException::MapException(std::string error) {
-    m_error = std::move(error);
+Map::MapException::MapException(const char *error) {
+    m_error = error;
 }
 
 const char *Map::MapException::what() const noexcept {

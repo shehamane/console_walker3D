@@ -18,16 +18,17 @@ void got_signal(int) {
 
 void initMap(Map *m) {
     std::vector<std::string> pattern = {
-            "###########################",
-            "#                         #",
-            "#      #############  #   #",
-            "#      #           #  #   #",
-            "#    # #  ####     #  #   #",
-            "#         ##### ####  #   #",
-            "#    ######           #   #",
-            "#         #############   #",
-            "#                         #",
-            "###########################"
+            "##############################",
+            "#                            #",
+            "#      #############  #      #",
+            "#      #           #  #      #",
+            "#    # #  ####     #  #      #",
+            "#         ##### ####  #      #",
+            "#    ######           #      #",
+            "#         #############      #",
+            "#                            #",
+            "##############################"
+
     };
     (*m).build(pattern);
 }
@@ -45,7 +46,7 @@ int main(int argc, char **argv) {
         Screen screen(120, 30);
         screen.setFPS(40);
 
-        Map m(27, 10);
+        Map m;
         initMap(&m);
 
         Player p(&m, 1.0, 1.0);
@@ -62,7 +63,7 @@ int main(int argc, char **argv) {
         }
 
         sleep(10);
-    } catch (std::exception e) {
+    } catch (Map::MapException e) {
         printf("%s", e.what());
     }
     return 0;

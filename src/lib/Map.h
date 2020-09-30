@@ -32,15 +32,16 @@ public:
         std::string m_error;
 
     public:
-        explicit MapException(std::string error);
+        explicit MapException(const char* error);
 
         const char* what() const noexcept override;
     };
 
 private:
     int width, height;
-    Scheme *scheme;
+    Scheme *scheme{};
 public:
+    Map();
     Map(int w, int h);
     ~Map();
 
