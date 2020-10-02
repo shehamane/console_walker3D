@@ -1,11 +1,11 @@
-#include "Minimap.h"
+#include "World.h"
 
-Minimap::Minimap(Map *m, Player *p) {
+World::World(Map *m, Player *p) {
     map = m;
     player = p;
 }
 
-std::vector<std::string>* Minimap::toFrame() {
+std::vector<std::string>* World::toFrame() {
     auto *frame = new std::vector<std::string>(map->getHeight());
 
     for (int i = 0; i < map->getHeight(); ++i) {

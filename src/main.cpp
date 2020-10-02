@@ -1,7 +1,7 @@
 #include "lib/Screen.h"
 #include "lib/Map.h"
 #include "lib/Player.h"
-#include "lib/Minimap.h"
+#include "lib/World.h"
 
 #include <unistd.h>
 #include <string>
@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
         Player p(&m, 1.0, 1.0);
         p.setSpeed(1);
 
-        Minimap mp(&m, &p);
+        World mp(&m, &p);
 
         m.print();
 
