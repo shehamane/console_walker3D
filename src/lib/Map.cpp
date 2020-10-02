@@ -66,7 +66,7 @@ void Map::changeLine(int lineIndex, std::string newLine) {
 }
 
 bool Map::get(int x, int y) {
-    return scheme->get(x, y);
+    return scheme->get(y, x);
 }
 
 Map::Scheme::Scheme(int w, int h) {

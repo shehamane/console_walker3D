@@ -1,23 +1,24 @@
 #include "World.h"
 
-World::World(Map *m, Player *p) {
+World::World(Map *m, Player *p, Frame *f) {
     map = m;
     player = p;
+    frame = f;
 }
 
-std::vector<std::string>* World::toFrame() {
-    auto *frame = new std::vector<std::string>(map->getHeight());
-
+void World::toFrame() {
     for (int i = 0; i < map->getHeight(); ++i) {
         for (int j = 0; j < map->getWidth(); ++j)
             if ((int)player->getY() == i && (int)player->getX() == j)
-                (*frame)[i] += 'P';
-            else if (map->get(i, j))
-                (*frame)[i] += '#';
+                frame->change(j, i, 'P');
+            else if (map->get(j, i))
+                frame->change(j, i, '#');
             else
-                (*frame)[i] += ' ';
-        (*frame)[i] += '\n';
+                frame->change(j, i, ' ');
+        frame->change(i, map->getWidth()+1, '\n');
     }
+}
 
-    return frame;
+void World::update() {
+    frame->change(player->getX(), player->getY(), 'P');
 }

@@ -72,16 +72,16 @@ void Screen::sleep(unsigned int delay = 0) const {
     }
 }
 
-void Screen::printWithDelay(std::string s, unsigned int delay) {
+void Screen::showFrame(Frame *frame, unsigned int delay) {
     clear();
-    std::cout << s;
-    std::cout.flush();
+    for (auto & i : frame->chars)
+        std::cout << i;
     this->sleep(delay);
 }
 
 void Screen::showFrame(std::vector<std::string> *frame, unsigned int delay) {
     clear();
-    for (int i = 0; i<(*frame).size(); ++i)
+    for (int i = 0; i < (*frame).size(); ++i)
         std::cout << (*frame)[i];
     std::cout.flush();
     delete frame;
@@ -92,3 +92,4 @@ std::string Screen::charToString(char c) {
     std::string s(1, c);
     return s;
 }
+

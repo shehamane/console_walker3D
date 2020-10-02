@@ -2,6 +2,7 @@
 #include "lib/Map.h"
 #include "lib/Player.h"
 #include "lib/World.h"
+#include "lib/Frame.h"
 
 #include <unistd.h>
 #include <string>
@@ -19,12 +20,12 @@ void got_signal(int) {
 void initMap(Map *m) {
     std::vector<std::string> pattern = {
             "############################################################",
-            "#                                                          #",
+            "#      #                                                   #",
             "#      #############  #                                    #",
             "#      #           #  #                                    #",
-            "#    # #  ####     #  #                                    #",
-            "#         ##### ####  #                                    #",
-            "#    ######           #                                    #",
+            "#      #  ####     #  #                                    #",
+            "#      #  ##### ####  #                                    #",
+            "#      ####           #                                    #",
             "#         #############                                    #",
             "#                                                          #",
             "############################################################"
@@ -46,19 +47,34 @@ int main(int argc, char **argv) {
         Map m;
         initMap(&m);
 
-        Screen screen(m.getWidth(), m.getHeight()+1);
-        screen.setFPS(30);
+        Screen screen(m.getWidth(), m.getHeight() + 1);
+        screen.setFPS(60);
+        Frame frame(&m);
 
-        Player p(&m, 1.0, 1.0);
+        Player p(&m, 1.0, 1.0, &frame);
         p.setSpeed(1);
+        p.setTurnSpeed(1);
+        p.setViewAngle(360);
+        p.setViewRadius(10);
+        frame.change(p.getX(), p.getY(), 'P');
 
-        World mp(&m, &p);
+        World world(&m, &p, &frame);
 
         m.print();
 
+        std::pair<int, int> looked(-1, -1), last(-1, -1);
+
         while (true) {
-            screen.showFrame(mp.toFrame());
-            p.step(screen.getch());
+//            screen.printWithDelay(std::to_string(p.getViewAxis()) + " " + std::to_string(p.getX()) + " " + std::to_string(p.getY()));
+            screen.showFrame(&frame);
+            p.handleKey(screen.getch());
+            looked = p.castRay(p.getViewAxis());
+            if (last.first != -1)
+                frame.change(last.first, last.second, '#');
+            if (looked.first != -1)
+                frame.change(looked.first, looked.second, 'L');
+            last.first = looked.first;
+            last.second = looked.second;
             if (quit.load()) break;
         }
 

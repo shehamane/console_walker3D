@@ -3,16 +3,19 @@
 
 #include "Player.h"
 #include "Map.h"
+#include "Frame.h"
 
 class World {
 private:
     Player *player;
     Map *map;
+    Frame *frame;
 
 public:
-    World(Map *m, Player *p);
+    World(Map *m, Player *p, Frame *f);
 
-    std::vector<std::string>* toFrame();
+    void toFrame();
+    void update();
 };
 
 #endif //CONSOLEWALKER3D_WORLD_H

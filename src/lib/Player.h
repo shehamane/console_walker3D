@@ -2,26 +2,53 @@
 #define CONSOLEWALKER3D_PLAYER_H
 
 #include "Map.h"
+#include "Frame.h"
 
-class Player{
+class Player {
 private:
     float posX, posY;
-    float stepDist;
+    float viewAxis, viewAngle, viewRadius;
+    float stepDist, turnAngle;
     Map *map;
+    Frame *frame;
 
-public:
-    explicit Player(Map *m);
-    Player(Map *m, float x, float y);
-    void setSpeed(float speed);
+    void moveX(float offset);
 
-    float getX();
-    float getY();
-    void changeX(float offset);
-    void changeY(float offset);
+    void moveY(float offset);
+
     bool checkX(float offset);
+
     bool checkY(float offset);
 
-    void step(char direciton);
+    float changeViewAxis(float newAxis);
+
+public:
+
+    std::pair<int, int> castRay(float angle);
+
+    explicit Player(Map *m, Frame *f);
+
+    Player(Map *m, float x, float y, Frame *f);
+
+    void setSpeed(float speed);
+
+    void setTurnSpeed(float speed);
+
+    void setViewAngle(int angle);
+
+    void setViewRadius(float radius);
+
+    float getX();
+
+    float getY();
+
+    float getViewAxis();
+
+    float getViewAngle();
+
+    void turn(bool isPositive);
+
+    void handleKey(char key);
 };
 
 #endif //CONSOLEWALKER3D_PLAYER_H
