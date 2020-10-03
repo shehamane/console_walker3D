@@ -101,6 +101,8 @@ void Player::handleKey(char key) {
         case 'e':
             turn(true);
             break;
+        case '`':
+            throw Map::MapException("quit");
     }
 }
 
