@@ -3,16 +3,15 @@
 
 #include <iostream>
 
-
 int main(){
-    std::setlocale(LC_ALL, "en_US.UTF-8");    try{
+    try{
         Screen screen(200, 200);
         screen.setFPS(60);
-        Square s(screen, 5);
+        Square s(&screen, 5);
         while(true){
             s.keyHandler();
         }
-    } catch (std::exception e) {
+    } catch (Map::MapException e) {
         std::cout << e.what();
     }
 

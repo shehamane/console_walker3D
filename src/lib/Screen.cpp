@@ -33,11 +33,13 @@ void Screen::initTermios() {
     currentIO = oldIO;
     currentIO.c_lflag &= ~ICANON;
     currentIO.c_lflag &= ~ECHO;
+    system("xset r rate 1 10");
     tcsetattr(0, TCSANOW, &currentIO);
 }
 
-void Screen::resetTermios(void) {
+void Screen::resetTermios() {
     tcsetattr(0, TCSANOW, &oldIO);
+    system("xset r rate 600 25");
 }
 
 char Screen::getch() {
@@ -70,18 +72,19 @@ void Screen::sleep(unsigned int delay = 0) const {
     }
 }
 
-void Screen::printWithDelay(std::string s, unsigned int delay) {
+void Screen::showFrame(Frame *frame, unsigned int delay) {
     clear();
-    std::cout << s;
-    std::cout.flush();
+    for (auto & i : frame->chars)
+        std::cout << i;
     this->sleep(delay);
 }
 
-void Screen::printWithDelay(std::vector<std::string> frame, unsigned int delay) {
+void Screen::showFrame(std::vector<std::string> *frame, unsigned int delay) {
     clear();
-    for (int i = 0; i<frame.size(); ++i)
-        std::cout << frame[i];
+    for (int i = 0; i < (*frame).size(); ++i)
+        std::cout << (*frame)[i];
     std::cout.flush();
+    delete frame;
     this->sleep(delay);
 }
 
@@ -89,3 +92,4 @@ std::string Screen::charToString(char c) {
     std::string s(1, c);
     return s;
 }
+

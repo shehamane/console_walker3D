@@ -7,11 +7,11 @@ class Square {
 private:
     int size;
     char texture;
-    Screen screen;
+    Screen *screen;
     void show();
 
 public:
-    Square(Screen screen, int size);
+    Square(Screen *screen, int size);
     void keyHandler();
     void changeSize(int new_size);
 };

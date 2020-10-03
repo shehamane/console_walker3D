@@ -3,15 +3,15 @@
 #include "Square.h"
 
 
-Square::Square(Screen screen, int size) {
+Square::Square(Screen *screen, int size) {
     this->size = size;
     this->screen = screen;
-    this->texture = '\u25a0';
-    show();
+    this->texture = '0';
+    this->show();
 }
 
 void Square::keyHandler() {
-    char key = screen.getch();
+    char key = screen->getch();
     switch (key) {
         case 'f':
             changeSize(size + 1);
@@ -22,18 +22,18 @@ void Square::keyHandler() {
             show();
             break;
         default:
-            screen.printWithDelay("Unknown key\n");
+            screen->printWithDelay("Unknown key\n");
     }
-    screen.sleep(20);
+    screen->sleep(20);
 }
 
 void Square::show() {
-    std::vector<std::string> frame(size);
-    std::string row(size, (char) 254);
+    auto *frame = new std::vector<std::string>(size);
+    std::string row(size, (char) texture);
     for (int i = 0; i < size; i++) {
-        frame[i] = row+"\n";
+        (*frame)[i] = row+"\n";
     }
-    screen.printWithDelay(frame);
+    screen->showFrame(frame);
 }
 
 void Square::changeSize(int new_size) {
