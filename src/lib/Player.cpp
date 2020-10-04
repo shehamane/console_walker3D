@@ -113,11 +113,11 @@ std::pair<int, int> Player::castRay(float angle) {
 }
 
 void Player::see() {
-    float angle;
+    double angle;
     std::pair<int, int> lookedXY = castRay(viewAxis);
     frame->change(lookedXY.first, lookedXY.second, '|');
 
-    for (float alpha = 0; alpha < this->viewAngle / 2; alpha +=0.1) {
+    for (double alpha = 0; alpha < this->viewAngle / 2; alpha +=0.1) {
         angle = viewAxis*180/M_PI + alpha;
         if (angle > 360)
             angle = angle - 360;

@@ -4,8 +4,9 @@
 #include <iostream>
 
 int main(){
+    setlocale(LC_ALL, ".866");
     try{
-        Screen screen(200, 200);
+        Screen screen(50, 20);
         screen.setFPS(60);
         Square s(&screen, 5);
         while(true){

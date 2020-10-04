@@ -21,8 +21,6 @@ private:
     //output
     void resize() const;
 
-    void clear();
-
     static std::string charToString(char c);
 
 public:
@@ -39,12 +37,7 @@ public:
     char getch(void);
 
     template<typename T>
-    void printWithDelay(T s, unsigned int delay = 0) {
-        clear();
-        std::cout << s;
-        std::cout.flush();
-        this->sleep(delay);
-    }
+    void printWithDelay(T s, unsigned int delay = 0);
 
     void showFrame(Frame *frame, unsigned int delay = 0);
     void showFrame(std::vector<std::string> *frame, unsigned int delay = 0);

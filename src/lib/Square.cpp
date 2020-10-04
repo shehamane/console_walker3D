@@ -6,7 +6,7 @@
 Square::Square(Screen *screen, int size) {
     this->size = size;
     this->screen = screen;
-    this->texture = '0';
+    this->texture = ' ';
     this->show();
 }
 
@@ -20,6 +20,9 @@ void Square::keyHandler() {
         case 'g':
             changeSize(size - 1);
             show();
+            break;
+        case '`':
+            throw Map::MapException("quit");
             break;
         default:
             screen->printWithDelay("Unknown key\n");

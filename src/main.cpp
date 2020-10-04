@@ -35,10 +35,10 @@ int main(int argc, char **argv) {
         Frame frame(&m);
 
         Player p(&m, 1.0, 1.0, &frame);
-        p.setSpeed(0.3);
+        p.setSpeed(1);
         p.setTurnSpeed(10);
         p.setViewAngle(60);
-        p.setViewRadius(1000);
+        p.setViewRadius(10);
 
         World world(&m, &p, &frame);
 
