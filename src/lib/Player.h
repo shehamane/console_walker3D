@@ -7,8 +7,8 @@
 class Player {
 private:
     float posX, posY;
-    float viewAxis, viewAngle, viewRadius;
-    float stepDist, turnAngle;
+    float viewAxis, viewAngle{}, viewRadius{};
+    float stepDist{}, turnAngle{};
     Map *map;
     Frame *frame;
 
@@ -22,9 +22,9 @@ private:
 
     float changeViewAxis(float newAxis);
 
-public:
-
     std::pair<int, int> castRay(float angle);
+
+public:
 
     explicit Player(Map *m, Frame *f);
 
@@ -38,15 +38,17 @@ public:
 
     void setViewRadius(float radius);
 
-    float getX();
+    float getX() const;
 
-    float getY();
+    float getY() const;
 
-    float getViewAxis();
+    float getViewAxis() const;
 
-    float getViewAngle();
+    float getViewAngle() const;
 
     void turn(bool isPositive);
+
+    void see();
 
     void handleKey(char key);
 };
