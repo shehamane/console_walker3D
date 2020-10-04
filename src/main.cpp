@@ -35,11 +35,10 @@ int main(int argc, char **argv) {
         Frame frame(&m);
 
         Player p(&m, 1.0, 1.0, &frame);
-        p.setSpeed(1);
-        p.setTurnSpeed(1);
-        p.setViewAngle(360);
-        p.setViewRadius(10);
-        frame.change(p.getX(), p.getY(), 'P');
+        p.setSpeed(0.3);
+        p.setTurnSpeed(10);
+        p.setViewAngle(60);
+        p.setViewRadius(1000);
 
         World world(&m, &p, &frame);
 
@@ -48,7 +47,9 @@ int main(int argc, char **argv) {
         while (true) {
 //            screen.printWithDelay(std::to_string(p.getViewAxis()) + " " + std::to_string(p.getX()) + " " + std::to_string(p.getY()));
             screen.showFrame(&frame);
+            frame.update();
             p.handleKey(screen.getch());
+            p.see();
         }
 
     } catch (Map::MapException e) {
