@@ -79,11 +79,11 @@ void Screen::sleep(unsigned int delay = 0) const {
 void Screen::showFrame(Frame *frame, unsigned int delay) {
     home();
     clrscr();
-    set_display_atrib(B_BLACK);
-    for (auto &i : frame->chars)
-        for (int j = 0; j < i.size(); ++j)
-            printf("%c", i[j]);
-    resetcolor();
+    for (int i = 0; i < frame->pixels.size(); ++i) {
+        for (int j = 0; j < frame->pixels[i].size(); ++j)
+            printPixel(frame->pixels[i][j]);
+        printf("\n");
+    }
     this->sleep(delay);
 }
 
@@ -91,9 +91,11 @@ void Screen::showFrame(std::vector<std::string> *frame, unsigned int delay) {
     home();
     clrscr();
     gotoxy(0, (height - frame->size()) / 2);
-    for (int i = 0; i < (*frame).size(); ++i)
+    for (int i = 0; i < (*frame).size(); ++i) {
         for (int j = 0; j < (*frame)[i].size(); ++j)
-            printf("%c", (*frame)[i][j]);
+            printPixel((*frame)[i][j]);
+        printf("\n");
+    }
     std::cout.flush();
     delete frame;
     this->sleep(delay);
@@ -109,5 +111,11 @@ void Screen::printWithDelay(T s, unsigned int delay) {
     std::cout << s;
     std::cout.flush();
     this->sleep(delay);
+}
+
+void Screen::printPixel(unsigned char color) {
+    set_display_atrib(color);
+    printf(" ");
+    resetcolor();
 }
 

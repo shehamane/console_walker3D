@@ -31,11 +31,11 @@ int main(int argc, char **argv) {
         initMap(&m);
 
         Screen screen(m.getWidth(), m.getHeight() + 1);
-        screen.setFPS(60);
+        screen.setFPS(120);
         Frame frame(&m);
 
         Player p(&m, 1.0, 1.0, &frame);
-        p.setSpeed(1);
+        p.setSpeed(0.3);
         p.setTurnSpeed(10);
         p.setViewAngle(60);
         p.setViewRadius(10);
