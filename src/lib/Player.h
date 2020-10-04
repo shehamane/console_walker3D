@@ -6,9 +6,9 @@
 
 class Player {
 private:
-    float posX, posY;
-    float viewAxis, viewAngle{}, viewRadius{};
-    float stepDist{}, turnAngle{};
+    double posX, posY;
+    double viewAxis, viewAngle{}, viewRadius{};
+    double stepDist{}, turnAngle{};
     Map *map;
     Frame *frame;
 

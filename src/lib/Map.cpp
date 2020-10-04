@@ -30,10 +30,10 @@ void Map::build() {
 
 void Map::build(std::vector<std::string> pattern) {
     if (width == 0 && height == 0) {
-        this -> height = pattern.size();
+        this->height = pattern.size();
         this->width = pattern[0].size();
         this->scheme = new Scheme(width, height);
-        for (int i = 0; i<height; i++){
+        for (int i = 0; i < height; i++) {
             if (pattern[i].size() != width)
                 throw MapException("Карта имеет не прямоугольную форму");
             scheme->changeLine(i, pattern[i]);
@@ -50,9 +50,13 @@ void Map::build(std::vector<std::string> pattern) {
     }
 }
 
-int Map::getWidth() const { return width; }
+int Map::getWidth() const {
+    return width;
+}
 
-int Map::getHeight() const { return height; }
+int Map::getHeight() const {
+    return height;
+}
 
 void Map::print() {
     for (int i = 0; i < height; ++i) {

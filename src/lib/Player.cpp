@@ -1,13 +1,14 @@
 #include "Player.h"
 #include <cmath>
 #include <iostream>
+#include "colors.h"
 
 Player::Player(Map *m, Frame *f) {
     map = m;
     posX = posY = 0;
     viewAxis = 0;
     frame = f;
-    frame->change(this->getX(), this->getY(), 'P');
+    frame->change(this->getX(), this->getY(), B_GREEN);
 }
 
 Player::Player(Map *m, float x, float y, Frame *f) {
@@ -16,7 +17,7 @@ Player::Player(Map *m, float x, float y, Frame *f) {
     posY = y;
     viewAxis = 0;
     frame = f;
-    frame->change(this->getX(), this->getY(), 'P');
+    frame->change(this->getX(), this->getY(), B_GREEN);
 }
 
 void Player::setSpeed(float speed) {
@@ -69,7 +70,7 @@ void Player::setViewAngle(int angle) {
 }
 
 void Player::handleKey(char key) {
-    frame->change((int) posX, (int) posY, ' ');
+    frame->change((int) posX, (int) posY, B_BLACK);
     switch (key) {
         case 'w':
             if (checkY(-stepDist))
@@ -97,7 +98,7 @@ void Player::handleKey(char key) {
             throw Map::MapException("quit");
             break;
     }
-    frame->change((int) posX, (int) posY, 'P');
+    frame->change((int) posX, (int) posY, B_GREEN);
 
 }
 
@@ -113,27 +114,28 @@ std::pair<int, int> Player::castRay(float angle) {
 }
 
 void Player::see() {
-    float angle;
-    std::pair<int, int> lookedXY = castRay(viewAxis);
-    frame->change(lookedXY.first, lookedXY.second, '|');
+    double angle;
+    std::pair<int, int> lookedXY;
 
-    for (float alpha = 0; alpha < this->viewAngle / 2; alpha +=0.1) {
-        angle = viewAxis*180/M_PI + alpha;
+    for (double alpha = 0; alpha < this->viewAngle / 2; alpha += 0.1) {
+        angle = viewAxis * 180 / M_PI + alpha;
         if (angle > 360)
             angle = angle - 360;
-        else if (angle<0)
-            angle = 360+angle;
+        else if (angle < 0)
+            angle = 360 + angle;
         angle *= M_PI / 180;
         lookedXY = castRay(angle);
-        frame->change(lookedXY.first, lookedXY.second, '|');
+        if (lookedXY.first >= 0 && lookedXY.second >= 0)
+            frame->change(lookedXY.first, lookedXY.second, B_BLUE);
 
-        angle = viewAxis*180/M_PI - alpha;
+        angle = viewAxis * 180 / M_PI - alpha;
         if (angle > 360)
             angle = angle - 360;
-        else if (angle<0)
-            angle = 360+angle;
+        else if (angle < 0)
+            angle = 360 + angle;
         angle *= M_PI / 180;
         lookedXY = castRay(angle);
-        frame->change(lookedXY.first, lookedXY.second, '|');
+        if (lookedXY.first >= 0 && lookedXY.second >= 0)
+            frame->change(lookedXY.first, lookedXY.second, B_BLUE);
     }
 }

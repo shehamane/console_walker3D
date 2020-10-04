@@ -1,31 +1,30 @@
 #include <string>
 #include "Frame.h"
+#include "colors.h"
 
 
-Frame::Frame(int w, int h) : chars(h) {
+Frame::Frame(int w, int h) : pixels(h, std::vector<unsigned char>(w)) {
     width = w;
     height = h;
 }
 
-void Frame::change(int x, int y, char c) {
-    chars[y][x] = c;
-}
-
-Frame::Frame(Map *map):chars(map->getHeight()) {
+Frame::Frame(Map *map):pixels(map->getHeight(), std::vector<unsigned char>(map->getWidth())) {
     this->map = map;
-    for (int i = 0; i<chars.size(); ++i) {
-        for (int j = 0; j < map->getWidth(); ++j)
-            chars[i] += map->get(j, i) ? '#' : ' ';
-        chars[i] += '\n';
-    }
+    width = map->getWidth();
+    height = map->getHeight();
+    for (int i = 0; i<height; ++i)
+        for (int j = 0; j<width; ++j)
+            pixels[i][j] = map->get(j, i) ? B_WHITE : B_BLACK;
 }
 
 void Frame::update() {
-    for (int i = 0; i<chars.size(); ++i) {
-        for (int j = 0; j < map->getWidth(); ++j)
-            chars[i][j] = map->get(j, i) ? '#' : ' ';
-        chars[i][map->getWidth()] = '\n';
-    }
+    for (int i = 0; i<height; ++i)
+        for (int j = 0; j<width; ++j)
+            pixels[i][j] = map->get(j, i) ? B_WHITE : B_BLACK;
+}
+
+void Frame::change(int x, int y, unsigned char c) {
+    pixels[y][x] = c;
 }
 
 
