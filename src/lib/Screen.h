@@ -21,6 +21,9 @@ private:
     //output
     void resize() const;
 
+    template<typename T>
+    void printWithDelay(T s, unsigned int delay = 0);
+
     static std::string charToString(char c);
 
 public:
@@ -36,8 +39,6 @@ public:
 
     char getch(void);
 
-    template<typename T>
-    void printWithDelay(T s, unsigned int delay = 0);
     void printPixel(unsigned char color);
 
     void showFrame(Frame *frame, unsigned int delay = 0);

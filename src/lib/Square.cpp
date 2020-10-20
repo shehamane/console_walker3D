@@ -1,12 +1,13 @@
 #include "iostream"
 #include "Screen.h"
 #include "Square.h"
+#include "colors.h"
 
 
 Square::Square(Screen *screen, int size) {
     this->size = size;
     this->screen = screen;
-    this->texture = ' ';
+    this->texture = B_RED;
     this->show();
 }
 
@@ -24,8 +25,8 @@ void Square::keyHandler() {
         case '`':
             throw Map::MapException("quit");
             break;
-        default:
-            screen->printWithDelay("Unknown key\n");
+//        default:
+//            screen->printWithDelay("Unknown key\n");
     }
     screen->sleep(20);
 }
