@@ -8,7 +8,6 @@ Player::Player(Map *m, Frame *f) {
     posX = posY = 0;
     viewAxis = 0;
     frame = f;
-    frame->change(this->getX(), this->getY(), B_GREEN);
 }
 
 Player::Player(Map *m, float x, float y, Frame *f) {
@@ -17,7 +16,6 @@ Player::Player(Map *m, float x, float y, Frame *f) {
     posY = y;
     viewAxis = 0;
     frame = f;
-    frame->change(this->getX(), this->getY(), B_GREEN);
 }
 
 void Player::setSpeed(float speed) {
@@ -70,7 +68,7 @@ void Player::setViewAngle(int angle) {
 }
 
 void Player::handleKey(char key) {
-    frame->change((int) posX, (int) posY, B_BLACK);
+    frame->change((int) map->getWidth()+posX, (int) posY, B_BLACK);
     switch (key) {
         case 'w':
             if (checkY(-stepDist))
@@ -98,35 +96,33 @@ void Player::handleKey(char key) {
             throw Map::MapException("quit");
             break;
     }
-    frame->change((int) posX, (int) posY, B_GREEN);
-
+    frame->change((int) map->getWidth()+posX, (int) posY, B_GREEN);
 }
 
 void Player::setViewRadius(float radius) {
     viewRadius = radius;
 }
 
-std::pair<int, int> Player::castRay(float angle) {
-    for (float c = 0; c < viewRadius; c += 0.01)
+double Player::castRay(float angle) {
+    for (double c = 0; c < viewRadius; c += 0.01)
         if (map->get((floor)(posX + c * cos(angle)), (floor)(posY + c * sin(angle))))
-            return std::make_pair((floor)(posX + c * cos(angle)), (floor)(posY + c * sin(angle)));
-    return std::make_pair(-1, -1);
+            return c;
+    return -1;
 }
 
 void Player::see() {
-    double angle;
-    std::pair<int, int> lookedXY;
+    double angle, dist;
 
-    for (double alpha = 0; alpha < this->viewAngle / 2; alpha += 0.1) {
+    for (double alpha = 0, i = 0; alpha < this->viewAngle / 2; alpha += 0.5, ++i) {
         angle = viewAxis * 180 / M_PI + alpha;
         if (angle > 360)
             angle = angle - 360;
         else if (angle < 0)
             angle = 360 + angle;
         angle *= M_PI / 180;
-        lookedXY = castRay(angle);
-        if (lookedXY.first >= 0 && lookedXY.second >= 0)
-            frame->change(lookedXY.first, lookedXY.second, B_BLUE);
+        dist = castRay(angle);
+        if (dist != -1)
+            frame->drawRect(i, 60/dist, viewAngle, B_WHITE);
 
         angle = viewAxis * 180 / M_PI - alpha;
         if (angle > 360)
@@ -134,8 +130,8 @@ void Player::see() {
         else if (angle < 0)
             angle = 360 + angle;
         angle *= M_PI / 180;
-        lookedXY = castRay(angle);
-        if (lookedXY.first >= 0 && lookedXY.second >= 0)
-            frame->change(lookedXY.first, lookedXY.second, B_BLUE);
+        dist = castRay(angle);
+        if (dist != -1)
+            frame->drawRect(viewAngle-i, 60/dist, viewAngle, B_WHITE);
     }
 }

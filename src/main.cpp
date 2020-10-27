@@ -30,26 +30,25 @@ int main(int argc, char **argv) {
         Map m;
         initMap(&m);
 
-        Screen screen(m.getWidth(), m.getHeight() + 1);
+        Screen screen(120+m.getWidth(), 41);
         screen.setFPS(120);
-        Frame frame(&m);
+        Frame frame(screen.getWidth(), screen.getHeight()-1, &m);
 
         Player p(&m, 1.0, 1.0, &frame);
         p.setSpeed(0.3);
         p.setTurnSpeed(10);
         p.setViewAngle(60);
-        p.setViewRadius(10);
+        p.setViewRadius(5);
 
         World world(&m, &p, &frame);
 
-        m.print();
-
+        screen.showFrame(&frame);
         while (true) {
 //            screen.printWithDelay(std::to_string(p.getViewAxis()) + " " + std::to_string(p.getX()) + " " + std::to_string(p.getY()));
-            screen.showFrame(&frame);
-            frame.update();
             p.handleKey(screen.getch());
+            frame.erase();
             p.see();
+            screen.showFrame(&frame);
         }
 
     } catch (Map::MapException e) {

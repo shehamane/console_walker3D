@@ -33,6 +33,9 @@ public:
 
     ~Screen();
 
+    int getWidth();
+    int getHeight();
+
     void setFPS(int fps);
 
     void sleep(unsigned int delay) const;
@@ -43,6 +46,7 @@ public:
 
     void showFrame(Frame *frame, unsigned int delay = 0);
     void showFrame(std::vector<std::string> *frame, unsigned int delay = 0);
+    void showMap(Map* m);
 };
 
 #endif //CONSOLEWALKER3D_SCREEN_H

@@ -41,7 +41,7 @@ void Screen::initTermios() {
     currentIO = oldIO;
     currentIO.c_lflag &= ~ICANON;
     currentIO.c_lflag &= ~ECHO;
-    system("xset r rate 1 10");
+//    system("xset r rate 1 10");
     tcsetattr(0, TCSANOW, &currentIO);
 }
 
@@ -90,7 +90,7 @@ void Screen::showFrame(Frame *frame, unsigned int delay) {
 void Screen::showFrame(std::vector<std::string> *frame, unsigned int delay) {
     home();
     clrscr();
-    gotoxy(0, (height - frame->size()) / 2);
+    gotoxy(0, 0);
     for (int i = 0; i < (*frame).size(); ++i) {
         for (int j = 0; j < (*frame)[i].size(); ++j)
             printPixel((*frame)[i][j]);
@@ -119,3 +119,19 @@ void Screen::printPixel(unsigned char color) {
     resetcolor();
 }
 
+int Screen::getWidth() {
+    return this->width;
+}
+
+int Screen::getHeight() {
+    return this->height;
+}
+
+void Screen::showMap(Map *m) {
+    for (int i = 0; i < m->getHeight(); ++i) {
+        home();
+        gotoxy(this->width, i);
+        for (int j = 0; j<m->getWidth(); ++j)
+            m->get(j, i) ? printPixel(B_WHITE) : printPixel(B_BLACK);
+    }
+}

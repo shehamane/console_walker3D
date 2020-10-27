@@ -22,7 +22,7 @@ private:
 
     float changeViewAxis(float newAxis);
 
-    std::pair<int, int> castRay(float angle);
+    double castRay(float angle);
 
 public:
 
