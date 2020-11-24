@@ -39,6 +39,7 @@ public:
 
 private:
     int width, height;
+    int playerX{}, playerY{};
     Scheme *scheme{};
 public:
     Map();
@@ -53,6 +54,8 @@ public:
     void print();
     void changeLine(int lineIndex, std::string newLine);
     bool get(int x, int y);
+    void setPlayerXY(int x, int y);
+    std::pair<int, int> getPlayerXY();
 };
 
 #endif //CONSOLEWALKER3D_MAP_H

@@ -1,29 +1,11 @@
 #include "Frame.h"
 #include "colors.h"
 
-
 Frame::Frame(int w, int h, Map *m) : pixels(h, std::vector<unsigned char>(w)) {
     width = w;
     height = h;
-    map = m;
-    for (int i = 0; i < m->getHeight(); ++i)
-        for (int j = 0; j < m->getWidth(); ++j)
-            pixels[i][j + m->getWidth()] = m->get(j, i) ? B_BLUE : B_BLACK;
-}
-
-Frame::Frame(Map *map) : pixels(map->getHeight(), std::vector<unsigned char>(map->getWidth())) {
-    this->map = map;
-    width = map->getWidth();
-    height = map->getHeight();
-    for (int i = 0; i < height; ++i)
-        for (int j = 0; j < width; ++j)
-            pixels[i][j] = map->get(j, i) ? B_BLUE : B_BLACK;
-}
-
-void Frame::update() {
-    for (int i = 0; i < height; ++i)
-        for (int j = 0; j < width; ++j)
-            pixels[i][j] = map->get(j, i) ? B_BLUE : B_BLACK;
+    mapWidth = m->getWidth();
+    viewWidth = w- mapWidth;
 }
 
 void Frame::change(int x, int y, unsigned char c) {
@@ -31,9 +13,9 @@ void Frame::change(int x, int y, unsigned char c) {
 }
 
 void Frame::drawRect(int x, int h, int angle, int color) {
-    int w = (width - map->getWidth())/angle;
+    int w = (width - mapWidth)/angle;
     x*=w;
-    for (int i = 0; i<w; ++i)
+    for (int i = 0; i<w && x+i<viewWidth; ++i)
         drawColumn(x+i, h, color);
 }
 
@@ -48,8 +30,23 @@ void Frame::drawColumn(int x, int h, int color) {
 
 void Frame::erase() {
     for (int i = 0; i < height; ++i)
-        for (int j = 0; j < width- map->getWidth(); ++j)
+        for (int j = 0; j < width- mapWidth; ++j)
             pixels[i][j] = 0;
+}
+
+void Frame::drawMap(Map *m) {
+    for (int i = 0; i<m->getHeight(); ++i)
+        for (int j = 0; j< m->getWidth(); ++j)
+            pixels[i][j+viewWidth] = m->get(j, i) ? B_BLUE : B_BLACK;
+    pixels[m->getPlayerXY().second][m->getPlayerXY().first + viewWidth] = B_GREEN;
+}
+
+int Frame::getWidth() const {
+    return viewWidth;
+}
+
+int Frame::getHeight() const {
+    return height;
 }
 
 

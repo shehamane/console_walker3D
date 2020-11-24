@@ -12,39 +12,39 @@ private:
     Map *map;
     Frame *frame;
 
-    void moveX(float offset);
+    void moveX(double offset);
 
-    void moveY(float offset);
+    void moveY(double offset);
 
-    bool checkX(float offset);
+    bool checkX(double offset);
 
-    bool checkY(float offset);
+    bool checkY(double offset);
 
-    float changeViewAxis(float newAxis);
+    double changeViewAxis(double newAxis);
 
-    double castRay(float angle);
+    double castRay(double angle);
 
 public:
 
     explicit Player(Map *m, Frame *f);
 
-    Player(Map *m, float x, float y, Frame *f);
+    Player(Map *m, double x, double y, Frame *f);
 
-    void setSpeed(float speed);
+    void setSpeed(double speed);
 
-    void setTurnSpeed(float speed);
+    void setTurnSpeed(double speed);
 
     void setViewAngle(int angle);
 
-    void setViewRadius(float radius);
+    void setViewRadius(double radius);
 
-    float getX() const;
+    double getX() const;
 
-    float getY() const;
+    double getY() const;
 
-    float getViewAxis() const;
+    double getViewAxis() const;
 
-    float getViewAngle() const;
+    double getViewAngle() const;
 
     void turn(bool isPositive);
 

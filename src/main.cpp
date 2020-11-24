@@ -1,7 +1,6 @@
 #include "lib/Screen.h"
 #include "lib/Map.h"
 #include "lib/Player.h"
-#include "lib/World.h"
 #include "lib/Frame.h"
 
 #include <string>
@@ -10,13 +9,13 @@
 void initMap(Map *m) {
     std::vector<std::string> pattern = {
             "############################################################",
-            "#      #                       #           #               #",
-            "#      #############  #        #           #               #",
-            "#      #           #  #        #           #               #",
-            "#      #  ####     #  #        #           #               #",
-            "#      #  ##### ####  #        #           #               #",
-            "#      ####           #        #####   #####               #",
-            "#         #############                                    #",
+            "#                              #           #               #",
+            "#                              #           #               #",
+            "#                              #           #               #",
+            "#                              #           #               #",
+            "#                              #           #               #",
+            "#                              #####   #####               #",
+            "#                                                          #",
             "#                                                          #",
             "############################################################"
 
@@ -38,20 +37,18 @@ int main(int argc, char **argv) {
         p.setSpeed(0.3);
         p.setTurnSpeed(10);
         p.setViewAngle(60);
-        p.setViewRadius(5);
+        p.setViewRadius(20);
 
-        World world(&m, &p, &frame);
-
-        screen.showFrame(&frame);
         while (true) {
 //            screen.printWithDelay(std::to_string(p.getViewAxis()) + " " + std::to_string(p.getX()) + " " + std::to_string(p.getY()));
             p.handleKey(screen.getch());
             frame.erase();
             p.see();
+            frame.drawMap(&m);
             screen.showFrame(&frame);
         }
 
-    } catch (Map::MapException e) {
+    } catch (Map::MapException& e) {
         printf("%s", e.what());
     }
     return 0;

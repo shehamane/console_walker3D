@@ -1,5 +1,6 @@
 #include <string>
 #include <exception>
+#include <utility>
 #include <vector>
 #include <iostream>
 #include "Map.h"
@@ -66,11 +67,20 @@ void Map::print() {
 }
 
 void Map::changeLine(int lineIndex, std::string newLine) {
-    this->scheme->changeLine(lineIndex, newLine);
+    this->scheme->changeLine(lineIndex, std::move(newLine));
 }
 
 bool Map::get(int x, int y) {
     return scheme->get(y, x);
+}
+
+void Map::setPlayerXY(int x, int y) {
+    playerX = x;
+    playerY = y;
+}
+
+std::pair<int, int> Map::getPlayerXY() {
+    return std::pair<int, int>(playerX, playerY);
 }
 
 Map::Scheme::Scheme(int w, int h) {
