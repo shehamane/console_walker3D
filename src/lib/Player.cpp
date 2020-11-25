@@ -11,6 +11,7 @@ Player::Player(Map *m, Frame *f) {
 
 Player::Player(Map *m, double x, double y, Frame *f) {
     map = m;
+    m->setPlayerXY(x, y);
     posX = x;
     posY = y;
     viewAxis = 0;
@@ -123,6 +124,8 @@ void Player::see() {
         dist = castRay((double)angle);
         if (dist != -1)
             frame->drawRect((int)i, (int)(frame->getHeight()/dist), (int)viewAngle, B_WHITE);
+        else
+            frame->drawBackground((int)i, (int)viewAngle);
 
         angle = viewAxis * 180 / M_PI - alpha;
         if (angle > 360)
@@ -133,5 +136,7 @@ void Player::see() {
         dist = castRay((double)angle);
         if (dist != -1)
             frame->drawRect((int)(frame->getWidth()-i), (int)(frame->getHeight()/dist), (int)viewAngle, B_WHITE);
+        else
+            frame->drawBackground((int)(frame->getWidth()-i), (int)viewAngle);
     }
 }

@@ -13,6 +13,7 @@ public:
 
     void drawColumn(int x, int h, int color);
     void drawRect(int x, int h, int angle, int color);
+    void drawBackground(int x, int angle);
     void drawMap(Map* m);
     int getWidth() const;
     int getHeight() const;

@@ -41,7 +41,7 @@ void Screen::initTermios() {
     currentIO = oldIO;
     currentIO.c_lflag &= ~ICANON;
     currentIO.c_lflag &= ~ECHO;
-//    system("xset r rate 1 10");
+    system("xset r rate 1 10");
     tcsetattr(0, TCSANOW, &currentIO);
 }
 

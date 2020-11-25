@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
         screen.setFPS(120);
         Frame frame(screen.getWidth(), screen.getHeight()-1, &m);
 
-        Player p(&m, 1.0, 1.0, &frame);
+        Player p(&m, 5.0, 7.0, &frame);
         p.setSpeed(0.3);
         p.setTurnSpeed(10);
         p.setViewAngle(60);
@@ -41,11 +41,11 @@ int main(int argc, char **argv) {
 
         while (true) {
 //            screen.printWithDelay(std::to_string(p.getViewAxis()) + " " + std::to_string(p.getX()) + " " + std::to_string(p.getY()));
-            p.handleKey(screen.getch());
             frame.erase();
             p.see();
             frame.drawMap(&m);
             screen.showFrame(&frame);
+            p.handleKey(screen.getch());
         }
 
     } catch (Map::MapException& e) {
