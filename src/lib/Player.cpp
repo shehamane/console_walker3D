@@ -97,7 +97,7 @@ void Player::handleKey(char key) {
         default:
             break;
     }
-    map->setPlayerXY((int)posX, (int)posY);
+    map->setPlayerXY((int) posX, (int) posY);
 }
 
 void Player::setViewRadius(double radius) {
@@ -114,18 +114,29 @@ double Player::castRay(double angle) {
 void Player::see() {
     double angle, dist;
 
-    for (double alpha = 0, i = 0; alpha < this->viewAngle / 2; alpha += viewAngle/frame->getWidth(), ++i) {
+    for (double alpha = 0, i = 0; alpha < this->viewAngle / 2; alpha += viewAngle / frame->getWidth(), ++i) {
         angle = viewAxis * 180 / M_PI + alpha;
         if (angle > 360)
             angle = angle - 360;
         else if (angle < 0)
             angle = 360 + angle;
         angle *= M_PI / 180;
-        dist = castRay((double)angle);
-        if (dist != -1)
-            frame->drawRect((int)i, (int)(frame->getHeight()/dist), (int)viewAngle, B_WHITE);
-        else
-            frame->drawBackground((int)i, (int)viewAngle);
+        dist = castRay((double) angle);
+        if (dist != -1) {
+            if (dist < viewRadius / 4)
+                frame->drawRect((int) i, (int) (frame->getHeight() / dist), (int) viewAngle, ' ',
+                                B_WHITE);
+            else {
+                if (dist < viewRadius / 2)
+                    frame->drawRect((int) i, (int) (frame->getHeight() / dist), (int) viewAngle, '#',
+                                    F_GREEN);
+                else
+                    frame->drawRect((int) i, (int) (frame->getHeight() / dist), (int) viewAngle, ':',
+                                    F_WHITE);
+                frame->drawBackground((int) i, (int) viewAngle);
+            }
+        } else
+            frame->drawBackground((int) i, (int) viewAngle);
 
         angle = viewAxis * 180 / M_PI - alpha;
         if (angle > 360)
@@ -133,10 +144,21 @@ void Player::see() {
         else if (angle < 0)
             angle = 360 + angle;
         angle *= M_PI / 180;
-        dist = castRay((double)angle);
-        if (dist != -1)
-            frame->drawRect((int)(frame->getWidth()-i), (int)(frame->getHeight()/dist), (int)viewAngle, B_WHITE);
-        else
-            frame->drawBackground((int)(frame->getWidth()-i), (int)viewAngle);
+        dist = castRay((double) angle);
+        if (dist != -1) {
+            if (dist < viewRadius / 4)
+                frame->drawRect((int) (frame->getWidth() - i), (int) (frame->getHeight() / dist), (int) viewAngle, ' ',
+                                B_WHITE);
+            else {
+                if (dist < viewRadius / 2)
+                    frame->drawRect((int) (frame->getWidth() - i), (int) (frame->getHeight() / dist), (int) viewAngle, '#',
+                                    F_GREEN);
+                else
+                    frame->drawRect((int) (frame->getWidth() - i), (int) (frame->getHeight() / dist), (int) viewAngle, ':',
+                                    F_WHITE);
+                frame->drawBackground((int) (frame->getWidth() - i), (int) viewAngle);
+            }
+        } else
+            frame->drawBackground((int) (frame->getWidth() - i), (int) viewAngle);
     }
 }

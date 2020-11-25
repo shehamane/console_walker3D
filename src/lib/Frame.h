@@ -8,16 +8,16 @@ class Frame{
 private:
     int width, height, mapWidth, viewWidth;
 public:
-    std::vector<std::vector<unsigned char>> pixels;
+    std::vector<std::vector<std::pair<char, unsigned char>>> pixels;
     Frame(int w, int h, Map* m);
 
-    void drawColumn(int x, int h, int color);
-    void drawRect(int x, int h, int angle, int color);
+    void drawColumn(int x, int h, char texture, unsigned char color);
+    void drawRect(int x, int h, int angle, char texture, unsigned char color);
     void drawBackground(int x, int angle);
     void drawMap(Map* m);
     int getWidth() const;
     int getHeight() const;
-    void change(int x, int y, unsigned char c);
+    void change(int x, int y, char texture, unsigned char color);
     void erase();
 };
 

@@ -20,6 +20,7 @@ Screen::Screen(int w, int h) {
     this->resize();
     clrscr();
     initTermios();
+    set_display_atrib(F_BLACK);
 }
 
 Screen::Screen() {
@@ -65,6 +66,7 @@ void Screen::setFPS(int fps) {
 
 void Screen::resize() const {
     printf("\e[8;%d;%d;t", this->height, this->width);
+    std::cout << "\x1b]50;" << "9x15" << "\a" << std::flush;
 }
 
 void Screen::sleep(unsigned int delay = 0) const {
@@ -76,28 +78,14 @@ void Screen::sleep(unsigned int delay = 0) const {
     }
 }
 
-void Screen::showFrame(Frame *frame, unsigned int delay) {
+void Screen::showFrame(Frame *frame, unsigned int delay) const {
     home();
     clrscr();
     for (int i = 0; i < frame->pixels.size(); ++i) {
         for (int j = 0; j < frame->pixels[i].size(); ++j)
-            printPixel(frame->pixels[i][j]);
+            printPixel(frame->pixels[i][j].first, frame->pixels[i][j].second);
         printf("\n");
     }
-    this->sleep(delay);
-}
-
-void Screen::showFrame(std::vector<std::string> *frame, unsigned int delay) {
-    home();
-    clrscr();
-    gotoxy(0, 0);
-    for (int i = 0; i < (*frame).size(); ++i) {
-        for (int j = 0; j < (*frame)[i].size(); ++j)
-            printPixel((*frame)[i][j]);
-        printf("\n");
-    }
-    std::cout.flush();
-    delete frame;
     this->sleep(delay);
 }
 
@@ -113,25 +101,16 @@ void Screen::printWithDelay(T s, unsigned int delay) {
     this->sleep(delay);
 }
 
-void Screen::printPixel(unsigned char color) {
+void Screen::printPixel(char texture, unsigned char color) {
     set_display_atrib(color);
-    printf(" ");
+    printf("%c", texture);
     resetcolor();
 }
 
-int Screen::getWidth() {
+int Screen::getWidth() const {
     return this->width;
 }
 
-int Screen::getHeight() {
+int Screen::getHeight() const {
     return this->height;
-}
-
-void Screen::showMap(Map *m) {
-    for (int i = 0; i < m->getHeight(); ++i) {
-        home();
-        gotoxy(this->width, i);
-        for (int j = 0; j<m->getWidth(); ++j)
-            m->get(j, i) ? printPixel(B_WHITE) : printPixel(B_BLACK);
-    }
 }

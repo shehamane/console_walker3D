@@ -1,23 +1,19 @@
 #include "Frame.h"
 #include "colors.h"
 
-Frame::Frame(int w, int h, Map *m) : pixels(h, std::vector<unsigned char>(w)) {
+Frame::Frame(int w, int h, Map *m) : pixels(h, std::vector<std::pair<char, unsigned char>>(w,
+                                                                                           std::pair<char, unsigned char>())) {
     width = w;
     height = h;
     mapWidth = m->getWidth();
     viewWidth = w - mapWidth;
 }
 
-void Frame::change(int x, int y, unsigned char c) {
-    pixels[y][x] = c;
+void Frame::change(int x, int y, char texture, unsigned char color) {
+    pixels[y][x].first = texture;
+    pixels[y][x].second = color;
 }
 
-void Frame::drawRect(int x, int h, int angle, int color) {
-    int w = (width - mapWidth) / angle;
-    x *= w;
-    for (int i = 0; i < w && x + i < viewWidth; ++i)
-        drawColumn(x + i, h, color);
-}
 
 void Frame::drawBackground(int x, int angle) {
     int w = (width - mapWidth) / angle;
@@ -25,36 +21,45 @@ void Frame::drawBackground(int x, int angle) {
 
     for (int j = 0; j < w && x + j < viewWidth; ++j) {
         for (int i = 0; i < height / 2; ++i)
-            pixels[i][x+j] = B_CYAN;
+            change(x + j, i, pixels[i][x+j].first, B_CYAN);
         for (int i = height / 2; i < height; ++i)
-            pixels[i][x+j] = B_GREEN;
+            change(x + j, i, pixels[i][x+j].first, B_GREEN);
     }
 }
 
-void Frame::drawColumn(int x, int h, int color) {
+void Frame::drawRect(int x, int h, int angle, char texture, unsigned char color) {
+    int w = (width - mapWidth) / angle;
+    x *= w;
+    for (int i = 0; i < w && x + i < viewWidth; ++i)
+        drawColumn(x + i, h, texture, color);
+}
+
+void Frame::drawColumn(int x, int h, char texture, unsigned char color) {
     if (h > height)
         h = height;
     int start = (height - h) / 2;
     int end = height - 1 - (height - h) / 2;
     for (int i = 0; i < start; ++i)
-        pixels[i][x] = B_CYAN;
+        change(x, i, ' ', B_CYAN);
     for (int i = start; i <= end; ++i)
-        pixels[i][x] = color;
+        change(x, i, texture, color);
     for (int i = end + 1; i < height; ++i)
-        pixels[i][x] = B_GREEN;
+        change(x, i, ' ', B_GREEN);
 }
 
 void Frame::erase() {
     for (int i = 0; i < height; ++i)
         for (int j = 0; j < width - mapWidth; ++j)
-            pixels[i][j] = 0;
+            change(j, i, ' ', 0);
 }
 
 void Frame::drawMap(Map *m) {
     for (int i = 0; i < m->getHeight(); ++i)
-        for (int j = 0; j < m->getWidth(); ++j)
-            pixels[i][j + viewWidth] = m->get(j, i) ? B_BLUE : B_BLACK;
-    pixels[m->getPlayerXY().second][m->getPlayerXY().first + viewWidth] = B_GREEN;
+        for (int j = 0; j < m->getWidth(); ++j) {
+            pixels[i][j + viewWidth].first = ' ';
+            pixels[i][j + viewWidth].second = m->get(j, i) ? B_BLUE : B_BLACK;
+        }
+    change(m->getPlayerXY().first + viewWidth, m->getPlayerXY().second, ' ', B_GREEN);
 }
 
 int Frame::getWidth() const {
