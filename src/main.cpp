@@ -9,12 +9,12 @@
 void initMap(Map *m) {
     std::vector<std::string> pattern = {
             "############################################################",
+            "#                              #                           #",
+            "#                     #        #           #               #",
             "#                              #           #               #",
-            "#                              #           #               #",
-            "#                              #           #               #",
-            "#                              #           #               #",
-            "#                              #           #               #",
-            "#                              #####   #####               #",
+            "#          ###                 #                   ###     #",
+            "#          # #   ####                      #         #     #",
+            "#          ###                 #####   #####               #",
             "#                                                          #",
             "#                                                          #",
             "############################################################"
@@ -29,14 +29,14 @@ int main(int argc, char **argv) {
         Map m;
         initMap(&m);
 
-        Screen screen(120+m.getWidth(), 41);
+        Screen screen(240+m.getWidth(), 61);
         screen.setFPS(120);
         Frame frame(screen.getWidth(), screen.getHeight()-1, &m);
 
         Player p(&m, 5.0, 7.0, &frame);
         p.setSpeed(0.3);
         p.setTurnSpeed(10);
-        p.setViewAngle(60);
+        p.setViewAngle(90);
         p.setViewRadius(20);
 
         while (true) {
