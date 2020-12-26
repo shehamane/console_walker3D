@@ -13,6 +13,7 @@ public:
 
     void drawColumn(int x, int h, char texture, unsigned char color);
     void drawRect(int x, int h, int angle, char texture, unsigned char color);
+    void drawByDist(double dist, int x, int viewAngle, double viewRadius);
     void drawBackground(int x, int angle);
     void drawMap(Map* m);
     int getWidth() const;

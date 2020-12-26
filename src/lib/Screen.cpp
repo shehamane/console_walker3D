@@ -69,7 +69,7 @@ void Screen::resize() const {
     std::cout << "\x1b]50;" << "9x15" << "\a" << std::flush;
 }
 
-void Screen::sleep(unsigned int delay = 0) const {
+void Screen::sleep(unsigned int delay) const {
     double milliseconds;
     clock_t time_end;
     milliseconds = 1000 / this->fps;

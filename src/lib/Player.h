@@ -6,6 +6,7 @@
 
 class Player {
 private:
+
     double posX, posY;
     double viewAxis, viewAngle{}, viewRadius{};
     double stepDist{}, turnAngle{};

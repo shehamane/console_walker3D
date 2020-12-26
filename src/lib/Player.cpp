@@ -11,7 +11,7 @@ Player::Player(Map *m, Frame *f) {
 
 Player::Player(Map *m, double x, double y, Frame *f) {
     map = m;
-    m->setPlayerXY(x, y);
+    m->setPlayerXY((int)x, (int)y);
     posX = x;
     posY = y;
     viewAxis = 0;
@@ -112,7 +112,7 @@ double Player::castRay(double angle) {
 }
 
 void Player::see() {
-    double angle, dist, d1 = -1, d2 = -1, dd1 = -1, dd2 = -1;
+    double angle, dist;
 
     for (double alpha = 0, i = 0; alpha < this->viewAngle / 2; alpha += viewAngle / frame->getWidth(), ++i) {
         angle = viewAxis * 180 / M_PI + alpha;
@@ -122,28 +122,10 @@ void Player::see() {
             angle = 360 + angle;
         angle *= M_PI / 180;
         dist = castRay((double) angle);
-        if (dist != -1) {
-            if (dist < viewRadius * 1 / 3)
-                frame->drawRect((int) i, (int) (frame->getHeight() / dist), (int) viewAngle, ' ',
-                                B_WHITE);
-            else {
-                if (dist < viewAngle * 2 / 3)
-                    frame->drawRect((int) i, (int) (frame->getHeight() / dist), (int) viewAngle, ':',
-                                    F_BLACK);
-                if (dist < viewRadius * 3 / 4)
-                    frame->drawRect((int) i, (int) (frame->getHeight() / dist), (int) viewAngle, '#',
-                                    F_WHITE);
-                else
-                    frame->drawRect((int) i, (int) (frame->getHeight() / dist), (int) viewAngle, ':',
-                                    F_WHITE);
-                frame->drawBackground((int) i, (int) viewAngle);
-            }
-        } else
-            frame->drawBackground((int) i, (int) viewAngle);
-        if ((dist == -1 &&  d1 != -1) || (dist != -1 && d1 != -1 && d2 != -1 && ((d2 < d1 && d1 > dist) || (d2 > d1 && d1 < dist))))
-            frame->drawRect((int) (i - 1), (int) (frame->getHeight() / d1), viewAngle, ' ', B_BLACK);
-        d2 = d1;
-        d1 = dist;
+
+        frame->drawByDist(dist, (int)i, (int)viewAngle, viewRadius);
+
+
 
         angle = viewAxis * 180 / M_PI - alpha;
         if (angle > 360)
@@ -152,26 +134,7 @@ void Player::see() {
             angle = 360 + angle;
         angle *= M_PI / 180;
         dist = castRay((double) angle);
-        if (dist != -1) {
-            if (dist < viewRadius / 4)
-                frame->drawRect((int) (frame->getWidth() - i), (int) (frame->getHeight() / dist), (int) viewAngle, ' ',
-                                B_WHITE);
-            else {
-                if (dist < viewRadius / 2)
-                    frame->drawRect((int) (frame->getWidth() - i), (int) (frame->getHeight() / dist), (int) viewAngle,
-                                    '#',
-                                    F_WHITE);
-                else
-                    frame->drawRect((int) (frame->getWidth() - i), (int) (frame->getHeight() / dist), (int) viewAngle,
-                                    ':',
-                                    F_WHITE);
-                frame->drawBackground((int) (frame->getWidth() - i), (int) viewAngle);
-            }
-        } else
-            frame->drawBackground((int) (frame->getWidth() - i), (int) viewAngle);
-        if ((dist == -1 &&  dd1 != -1) || (dist != -1 && dd1 != -1 && dd2 != -1 && ((dd2 < dd1 && dd1 > dist) || (dd2 > dd1 && dd1 < dist))))
-            frame->drawRect((int) (frame->getWidth() - i + 1), (int) (frame->getHeight() / dd1), viewAngle, ' ', B_BLACK);
-        dd2 = dd1;
-        dd1 = dist;
+
+        frame->drawByDist(dist, (int)(frame->getWidth() - i), (int)viewAngle, viewRadius);
     }
 }

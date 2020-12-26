@@ -29,13 +29,13 @@ int main(int argc, char **argv) {
         Map m;
         initMap(&m);
 
-        Screen screen(240+m.getWidth(), 61);
+        Screen screen(400+m.getWidth(), 81);
         screen.setFPS(120);
         Frame frame(screen.getWidth(), screen.getHeight()-1, &m);
 
         Player p(&m, 5.0, 7.0, &frame);
-        p.setSpeed(0.3);
-        p.setTurnSpeed(10);
+        p.setSpeed(0.1);
+        p.setTurnSpeed(3);
         p.setViewAngle(90);
         p.setViewRadius(20);
 

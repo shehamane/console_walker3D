@@ -21,9 +21,9 @@ void Frame::drawBackground(int x, int angle) {
 
     for (int j = 0; j < w && x + j < viewWidth; ++j) {
         for (int i = 0; i < height / 2; ++i)
-            change(x + j, i, pixels[i][x+j].first, B_CYAN);
+            change(x + j, i, pixels[i][x + j].first, B_CYAN);
         for (int i = height / 2; i < height; ++i)
-            change(x + j, i, pixels[i][x+j].first, B_GREEN);
+            change(x + j, i, pixels[i][x + j].first, B_GREEN);
     }
 }
 
@@ -68,6 +68,27 @@ int Frame::getWidth() const {
 
 int Frame::getHeight() const {
     return height;
+}
+
+void Frame::drawByDist(double dist, int x, int viewAngle, double viewRadius) {
+    if (dist != -1) {
+        if (dist < viewRadius * ((double)1 / 3))
+            this->drawRect((int) x, (int) (this->getHeight() / dist), (int) viewAngle, ' ',
+                            B_WHITE);
+        else {
+            if (dist < viewRadius * ((double)2 / 3))
+                this->drawRect((int) x, (int) (this->getHeight() / dist), (int) viewAngle, '#',
+                                F_RED);
+            else if (dist < viewRadius * 3 / 4)
+                this->drawRect((int) x, (int) (this->getHeight() / dist), (int) viewAngle, '#',
+                                F_WHITE);
+            else
+                this->drawRect((int) x, (int) (this->getHeight() / dist), (int) viewAngle, ':',
+                                F_WHITE);
+            this->drawBackground((int) x, (int) viewAngle);
+        }
+    } else
+        this->drawBackground((int) x, (int) viewAngle);
 }
 
 

@@ -38,7 +38,7 @@ public:
 
     void setFPS(int fps);
 
-    void sleep(unsigned int delay) const;
+    void sleep(unsigned int delay = 0) const;
 
     char getch(void);
 
